@@ -1,4 +1,4 @@
-package com.tecsup.petclinic.services;
+package com.tecsup.petclinic.service;
 
 import java.util.List;
 
