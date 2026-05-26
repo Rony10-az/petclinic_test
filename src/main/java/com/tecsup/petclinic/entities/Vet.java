@@ -39,4 +39,5 @@ public class Vet {
     public Boolean isActive() {
         return active;
     }
+    public void setActive(boolean active) { this.active = active; }
 }

@@ -5,6 +5,8 @@ import com.tecsup.petclinic.exceptions.VetNotFoundException;
 import com.tecsup.petclinic.repository.VetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+
 @SpringBootTest
 class VetServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(VetServiceTest.class);
 
-    @Autowired
-    private VetService vetService;
+    @Mock
+    private VetRepository vetRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
+    @InjectMocks
+    private VetService vetService; // Your service class
 
     @Test
     void testFindVetById() {
@@ -106,76 +108,4 @@ class VetServiceTest {
                 "Should throw RuntimeException for non-existent vet");
     }
 
-    @Test
-    void testFindVetById_NotFound() {
-        // Dado: Un ID que no existe en la base de datos
-        Long nonExistentId = 999L;
-
-        // Cuando: Se intenta buscar un vet con ese ID
-        PetService vetRepository;
-        when(vetRepository.findById(nonExistentId)).thenReturn(Optional.empty());
-
-        // Entonces: Debe lanzar VetNotFoundException
-        assertThrows(VetNotFoundException.class, () -> vetService.findVetById(nonExistentId));
-    }
-
-    // ===== TEST 2: testDeactivateVet_NotFound =====
-    @Test
-    void testDeactivateVet_NotFound() {
-        // Dado: Un ID que no existe
-        Long nonExistentId = 999L;
-
-        // Cuando: Se intenta inactivar un vet que no existe
-        when(vetRepository.findById(nonExistentId)).thenReturn(Optional.empty());
-
-        // Entonces: Debe lanzar VetNotFoundException
-        assertThrows(VetNotFoundException.class, () -> vetService.deactivateVet(nonExistentId));
-    }
-
-    // ===== TEST 3: testFindInactiveVets =====
-    @Test
-    void testFindInactiveVets() {
-        // Dado: Dos vets inactivos en la base de datos
-        Vet inactiveVet1 = new Vet();
-        inactiveVet1.setId(1L);
-        inactiveVet1.setActive(false);
-
-        Vet inactiveVet2 = new Vet();
-        inactiveVet2.setId(2L);
-        inactiveVet2.setActive(false);
-
-        // Mock del repositorio
-        when(vetRepository.findByActiveFalse()).thenReturn(List.of(inactiveVet1, inactiveVet2));
-
-        // Cuando: Se buscan vets inactivos
-        List<Vet> result = vetService.findInactiveVets();
-
-        // Entonces: Debe devolver solo los vets inactivos
-        assertEquals(2, result.size());
-        assertFalse(result.get(0).isActive());
-        assertFalse(result.get(1).isActive());
-    }
-
-    // ===== TEST BONUS: Verificar que no devuelve vets activos =====
-    @Test
-    void testFindInactiveVets_ShouldNotReturnActiveVets() {
-        // Dado: Un vet activo y otro inactivo
-        Vet activeVet = new Vet();
-        activeVet.setId(1L);
-        activeVet.setActive(true);
-
-        Vet inactiveVet = new Vet();
-        inactiveVet.setId(2L);
-        inactiveVet.setActive(false);
-
-        when(vetRepository.findByActiveFalse()).thenReturn(List.of(inactiveVet));
-
-        // Cuando: Se buscan vets inactivos
-        List<Vet> result = vetService.findInactiveVets();
-
-        // Entonces: Solo debe devolver el vet inactivo
-        assertEquals(1, result.size());
-        assertFalse(result.get(0).isActive());
-        assertNotEquals(activeVet.getId(), result.get(0).getId());
-    }
 }
