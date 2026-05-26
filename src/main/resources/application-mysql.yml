@@ -10,18 +10,19 @@
 # UNIX or MAC
 spring:
   datasource :
-    url : jdbc:mysql://localhost:3306/PETCLINIC_DB?useSSL=false
+    url : jdbc:mysql://localhost:3306/PETCLINIC_TEST?useSSL=false
     # Windows
     # url : jdbc:mysql://localhost:3306/PETCLINIC_DB?useSSL=false&serverTimezone=UTC
     username : root
-    password :
-
-    platform : mysql
-    initialization-mode : always
+    password : DB@Admin2023!Secure
 
   data :
     rest :
       basePath : /api
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 logging :
   # DEBUG, INFO , ERROR
@@ -40,4 +41,4 @@ logging :
   # file : %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%
 
 server :
-  port : 8080
+  port : 8081

@@ -3,10 +3,13 @@ package com.tecsup.petclinic.service;
 
 import com.tecsup.petclinic.dtos.VetDTO;
 import com.tecsup.petclinic.entities.Vet;
+import com.tecsup.petclinic.exceptions.VetNotFoundException;
 import com.tecsup.petclinic.mappers.VetMapper;
 import com.tecsup.petclinic.repository.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VetServiceImpl implements VetService {
@@ -38,11 +41,6 @@ public class VetServiceImpl implements VetService {
         return vetRepository.save(vet);
     }
 
-    @Override
-    public Vet findVetById(Long id) {
-        return vetRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vet not found with id: " + id));
-    }
 
     @Override
     public Vet updateVet(Long id, Vet vet) {
@@ -56,5 +54,23 @@ public class VetServiceImpl implements VetService {
                     return vetRepository.save(existingVet);
                 })
                 .orElseThrow(() -> new RuntimeException("Vet with id " + id + " not found!"));
+    }
+
+    @Override
+    public Vet findVetById(Long id) {
+        return vetRepository.findById(id)
+                .orElseThrow(() -> new VetNotFoundException("Vet with ID " + id + " not found"));
+    }
+
+    @Override
+    public void deactivateVet(Long id) {
+        Vet vet = findVetById(id); // Reutiliza el método anterior para lanzar la excepción
+        vet.setActive(false);
+        vetRepository.save(vet);
+    }
+
+    @Override
+    public List<Vet> findInactiveVets() {
+        return vetRepository.findByActiveFalse();
     }
 }
