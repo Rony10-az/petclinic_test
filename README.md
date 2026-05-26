@@ -1,4 +1,4 @@
-###### Grupo 2 — Integrante A
+###### Grupo 2 — Integrante A - LUIS ANGEL DIONICIO BARTOLO
 Se implementaron pruebas unitarias para el módulo VetService usando Spring Boot, JUnit 5 y base de datos H2 en memoria.
 Pruebas realizadas:
 testCreateVet → crear veterinario.
