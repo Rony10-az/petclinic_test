@@ -83,7 +83,7 @@ Cada integrante tiene asignado su propio bloque de pruebas. Cada bloque debe ir 
 
 ---
 
-### Grupo 5 — Pruebas para TypeService
+### Grupo 6 — Pruebas para TypeService
 
 **Integrante A — CRUD básico**
 - `testCreateType` — crear tipo.
@@ -128,7 +128,7 @@ Cada integrante tiene asignado su propio bloque de pruebas. Cada bloque debe ir 
 
 ---
 
-### Grupo 6 — Pruebas para VetSpecialtyService
+### Grupo 5 — Pruebas para VetSpecialtyService
 
 **Integrante A — Asignación**
 - `testAssignSpecialtyToVet` — asignar especialidad a un veterinario.
