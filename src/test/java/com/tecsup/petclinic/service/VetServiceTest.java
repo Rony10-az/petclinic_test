@@ -8,9 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
@@ -101,5 +105,68 @@ class VetServiceTest {
 
         assertThrows(RuntimeException.class, () -> this.vetService.findVetById(nonExistentId),
                 "Should throw RuntimeException for non-existent vet");
+    }
+
+    @Test
+    void testDeactivateVet() {
+        Vet vetInput = new Vet();
+        vetInput.setFirstName("Deactivate");
+        vetInput.setLastName("Vet");
+        vetInput.setEmail("deactivate.vet@test.com");
+        vetInput.setPhone("55500001");
+        vetInput.setActive(true);
+
+        Vet createdVet = vetService.createVet(vetInput);
+        Vet deactivatedVet = vetService.deactivateVet(createdVet.getId());
+        Vet persistedVet = vetService.findVetById(createdVet.getId());
+
+        assertFalse(deactivatedVet.isActive(), "Vet should be inactive after deactivation");
+        assertEquals(createdVet.getId(), persistedVet.getId(), "Vet record should still exist");
+        assertFalse(persistedVet.isActive(), "Inactive status should be persisted");
+    }
+
+    @Test
+    void testReactivateVet() {
+        Vet vetInput = new Vet();
+        vetInput.setFirstName("Reactivate");
+        vetInput.setLastName("Vet");
+        vetInput.setEmail("reactivate.vet@test.com");
+        vetInput.setPhone("55500002");
+        vetInput.setActive(false);
+
+        Vet createdVet = vetService.createVet(vetInput);
+        Vet reactivatedVet = vetService.reactivateVet(createdVet.getId());
+        Vet persistedVet = vetService.findVetById(createdVet.getId());
+
+        assertTrue(reactivatedVet.isActive(), "Vet should be active after reactivation");
+        assertTrue(persistedVet.isActive(), "Active status should be persisted");
+    }
+
+    @Test
+    void testFindActiveVets() {
+        Vet activeVetInput = new Vet();
+        activeVetInput.setFirstName("Active");
+        activeVetInput.setLastName("Vet");
+        activeVetInput.setEmail("active.vet@test.com");
+        activeVetInput.setPhone("55500003");
+        activeVetInput.setActive(true);
+
+        Vet inactiveVetInput = new Vet();
+        inactiveVetInput.setFirstName("Inactive");
+        inactiveVetInput.setLastName("Vet");
+        inactiveVetInput.setEmail("inactive.vet@test.com");
+        inactiveVetInput.setPhone("55500004");
+        inactiveVetInput.setActive(false);
+
+        Vet activeVet = vetService.createVet(activeVetInput);
+        Vet inactiveVet = vetService.createVet(inactiveVetInput);
+
+        List<Vet> activeVets = vetService.findActiveVets();
+
+        assertTrue(activeVets.stream().allMatch(Vet::isActive), "All returned vets should be active");
+        assertTrue(activeVets.stream().anyMatch(vet -> vet.getId().equals(activeVet.getId())),
+                "Created active vet should be returned");
+        assertFalse(activeVets.stream().anyMatch(vet -> vet.getId().equals(inactiveVet.getId())),
+                "Created inactive vet should not be returned");
     }
 }
