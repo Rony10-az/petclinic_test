@@ -22,7 +22,25 @@ Compila sin errores:
 ![Imagen1.png](src/main/java/com/tecsup/petclinic/docs/Imagen1.png)
 
 
-##### Integrante B
+### Integrante B - Jeronimo Rodrigo Ortiz Ortiz
+
+- Se trabajó el bloque asignado de `VetService` para validar `testDeactivateVet`, `testReactivateVet` y `testFindActiveVets` con asistencia IA local de Tecsup. 
+
+- La funcionalidad implementa soft delete mediante el campo `active`, permitiendo desactivar y reactivar veterinarios sin eliminar registros físicamente.  
+
+- También se agregó la consulta de veterinarios activos usando Spring Data JPA.  
+
+- Los archivos principales revisados fueron `VetService`, `VetServiceImpl`, `VetRepository`, `Vet` y `VetServiceTest`. 
+
+- Durante el proceso se corrigieron problemas de integración con la rama base y falsos errores del IDE sobre código generado por MapStruct.
+
+- La validación final se realizó con Maven, obteniendo `BUILD SUCCESS`.
+
+#### 1. Error crítico por sobrecodigo generado durante un merge.
+![ERRORES CRÍTICOS POR MALA PRAXIS](src/main/java/com/tecsup/petclinic/docs/img01-ortiz.png)
+
+#### 2. Valicaciones correctas
+![SOLUCIONADO](src/main/java/com/tecsup/petclinic/docs/img02-ortiz.png)
 
 
 
