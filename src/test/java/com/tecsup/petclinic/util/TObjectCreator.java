@@ -1,16 +1,11 @@
 package com.tecsup.petclinic.util;
 
-import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TObjectCreator {
-
-	public static Pet getPet() {
-		return new Pet(1,"Leo",1,1, null);
-	}
 
 	public static Pet newPet() {
 		Pet newEntity = new Pet();
@@ -25,21 +20,6 @@ public class TObjectCreator {
 		pet.setId(1000);
 		return pet;
 	}
-
-	public static PetDTO newPetDTO() {
-		PetDTO newDTO = new PetDTO();
-		newDTO.setName("Punky");
-		newDTO.setTypeId(1);
-		newDTO.setOwnerId(1);
-		return newDTO;
-	}
-
-	public static PetDTO newPetDTOCreated() {
-		PetDTO petDTO = newPetDTO();
-		petDTO.setId(1000);
-		return petDTO;
-	}
-
 
 	public static Pet newPetForUpdate() {
 		return new Pet(0,"Bear",1,1,null);
