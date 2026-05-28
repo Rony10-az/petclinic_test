@@ -29,7 +29,7 @@ public class VetServiceMockitoTest {
 
         assertThrows(VetNotFoundException.class, () -> vetService.findVetById(nonExistentId));
     }
-
+ 
     @Test
     void testDeactivateVet_NotFound() {
         Long nonExistentId = 999L;

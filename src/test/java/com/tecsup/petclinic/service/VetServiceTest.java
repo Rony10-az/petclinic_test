@@ -24,11 +24,11 @@ class VetServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(VetServiceTest.class);
 
-    @Mock
+    @Autowired
     private VetRepository vetRepository;
 
-    @InjectMocks
-    private VetService vetService; // Your service class
+    @Autowired
+    VetServiceImpl vetService; // ✅
 
     @Test
     void testFindVetById() {
