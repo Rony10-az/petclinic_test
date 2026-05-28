@@ -44,3 +44,34 @@ Compila sin errores:
 
 
 ##### Integrante C
+
+👨‍💻 Integrante C — Rony Quintana
+⚙️ Filtros y Manejo de Errores
+
+🔹 Descripción general
+Se implementaron pruebas unitarias enfocadas en validar el correcto filtrado de datos y el manejo de excepciones dentro del servicio de tipos de mascotas (TypeService).
+
+🔹 Pruebas realizadas
+
+✅ testGetPetCountByType_ExcludeInactive
+→ Verifica que el sistema excluya registros con active = false, asegurando reportes con datos válidos.
+
+❌ testFindTypeById_NotFound
+→ Valida que se lance la excepción TypeNotFoundException cuando no existe el tipo de mascota.
+
+❌ testDeleteType_NotFound
+→ Comprueba que el sistema lance una excepción al intentar eliminar un registro inexistente.
+
+🔹 Archivos trabajados
+📁 TypeServiceImpl.java
+📁 TypeServiceTest.java
+📁 TypeRepository.java
+📁 Type.java
+
+📸 Evidencia de ejecución
+
+🖼️ Resultado de las pruebas ejecutadas correctamente:
+
+![Evidencia.jpeg](src/main/java/com/tecsup/petclinic/docs/Evidencia.jpeg)
+
+![Evidencia2.jpeg](src/main/java/com/tecsup/petclinic/docs/Evidencia2.jpeg)
