@@ -1,28 +1,24 @@
 package com.tecsup.petclinic.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import com.tecsup.petclinic.dtos.PetDTO;
+import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.exceptions.PetNotFoundException;
+import com.tecsup.petclinic.repository.PetRepository;
+import com.tecsup.petclinic.mappers.PetMapper;
+import com.tecsup.petclinic.repository.VetRepository;
+import com.tecsup.petclinic.util.TObjectCreator;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean; // New import
 
 import java.util.List;
 import java.util.Optional;
 
-import com.tecsup.petclinic.dtos.PetDTO;
-import com.tecsup.petclinic.mappers.PetMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import com.tecsup.petclinic.entities.Pet;
-import com.tecsup.petclinic.exceptions.PetNotFoundException;
-import com.tecsup.petclinic.repository.PetRepository;
-import com.tecsup.petclinic.util.TObjectCreator;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean; // New import
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest

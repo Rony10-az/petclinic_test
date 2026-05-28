@@ -1,11 +1,10 @@
 package com.tecsup.petclinic.repository;
 
-import java.util.List;
-
+import com.tecsup.petclinic.entities.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.tecsup.petclinic.entities.Pet;
+import java.util.List;
 
 /**
  * 
