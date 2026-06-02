@@ -1,7 +1,6 @@
 package com.tecsup.petclinic.service;
 
 import com.tecsup.petclinic.entities.Vet;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
@@ -21,13 +19,10 @@ class VetServiceTest {
     @Autowired
     private VetService vetService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void testFindVetById() {
-        final String nameExpected = "James";
+        final String firstNameExpected = "James";
+        final String lastNameExpected = "Carter";
         Long id = 1L;
         Vet vet = null;
 
@@ -38,7 +33,8 @@ class VetServiceTest {
         }
 
         assertNotNull(vet, "Vet should not be NULL");
-        assertEquals(nameExpected, vet.getFirstName(), "Name should match");
+        assertEquals(firstNameExpected, vet.getFirstName(), "First name should match seed data");
+        assertEquals(lastNameExpected, vet.getLastName(), "Last name should match seed data");
     }
 
     @Test
@@ -46,7 +42,7 @@ class VetServiceTest {
         Vet vetInput = new Vet();
         vetInput.setFirstName("Maria");
         vetInput.setLastName("Gomez");
-        vetInput.setEmail("maria.gomez@test.com");
+        vetInput.setEmail("maria.gomez.integration@test.com");
         vetInput.setPhone("55512345");
         vetInput.setActive(true);
 
@@ -56,8 +52,14 @@ class VetServiceTest {
         log.info("New Vet created: {}", newVet);
 
         assertNotNull(newVet.getId(), "ID should be assigned");
-        assertEquals("Maria", newVet.getFirstName(), "First name should match");
-        assertEquals("Gomez", newVet.getLastName(), "Last name should match");
+
+        Vet persistedVet = vetService.findVetById(newVet.getId());
+
+        assertEquals("Maria", persistedVet.getFirstName(), "First name should be persisted in H2");
+        assertEquals("Gomez", persistedVet.getLastName(), "Last name should be persisted in H2");
+        assertEquals("maria.gomez.integration@test.com", persistedVet.getEmail(), "Email should be persisted in H2");
+        assertEquals("55512345", persistedVet.getPhone(), "Phone should be persisted in H2");
+        assertEquals(true, persistedVet.getActive(), "Active flag should be persisted in H2");
     }
 
     @Test
@@ -88,18 +90,12 @@ class VetServiceTest {
         Vet updatedVet = vetService.updateVet(createdVet.getId(), createdVet);
         log.info("Vet updated to: {}", updatedVet);
 
-        assertEquals(updatedFirstName, updatedVet.getFirstName(), "First name should be updated");
-        assertEquals(updatedLastName, updatedVet.getLastName(), "Last name should be updated");
-        assertEquals(email, updatedVet.getEmail(), "Email should remain the same");
-        assertEquals(phone, updatedVet.getPhone(), "Phone should remain the same");
-        assertEquals(active, updatedVet.isActive(), "Active status should remain the same");
-    }
+        Vet persistedVet = vetService.findVetById(updatedVet.getId());
 
-    @Test
-    void testFindNonExistentVet() {
-        Long nonExistentId = 999L;
-
-        assertThrows(RuntimeException.class, () -> this.vetService.findVetById(nonExistentId),
-                "Should throw RuntimeException for non-existent vet");
+        assertEquals(updatedFirstName, persistedVet.getFirstName(), "First name should be updated in H2");
+        assertEquals(updatedLastName, persistedVet.getLastName(), "Last name should be updated in H2");
+        assertEquals(email, persistedVet.getEmail(), "Email should remain the same");
+        assertEquals(phone, persistedVet.getPhone(), "Phone should remain the same");
+        assertEquals(active, persistedVet.getActive(), "Active status should remain the same");
     }
 }

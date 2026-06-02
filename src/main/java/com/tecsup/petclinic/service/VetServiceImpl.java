@@ -8,6 +8,8 @@ import com.tecsup.petclinic.repository.VetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VetServiceImpl implements VetService {
     // src/main/java/com/tecsup/petclinic/service/VetServiceImpl.java
@@ -42,6 +44,11 @@ public class VetServiceImpl implements VetService {
     public Vet findVetById(Long id) {
         return vetRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vet not found with id: " + id));
+    }
+
+    @Override
+    public List<Vet> findAllVets() {
+        return vetRepository.findAll();
     }
 
     @Override
