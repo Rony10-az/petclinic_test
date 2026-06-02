@@ -16,20 +16,16 @@ spring:
     username : ${DB_USERNAME}
     password : ${DB_PASSWORD}
 
-    platform : mysql
-    initialization-mode : always
+  sql:
+    init:
+      mode: always
+      platform: mysql
 
   jpa:
     generate-ddl : false
     hibernate.ddl-auto : none
     open-in-view : false
     show-sql : true
-    # The SQL dialect makes Hibernate generate better SQL for the chosen database
-    properties :
-      hibernate :
-        dialect : org.hibernate.dialect.MySQL5Dialect
-
-
 
   data :
     rest :

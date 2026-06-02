@@ -1,34 +1,32 @@
 package com.tecsup.petclinic.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.mappers.PetMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exceptions.PetNotFoundException;
 import com.tecsup.petclinic.repository.PetRepository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author jgomezm
  *
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
 
-	PetRepository petRepository;
-	PetMapper petMapper;
-
-	public PetServiceImpl (PetRepository petRepository, PetMapper petMapper) {
-		this. petRepository = petRepository;
-		this.petMapper = petMapper;
-	}
+	private final PetRepository petRepository;
+	private final PetMapper petMapper;
 
 
 	/**
@@ -99,7 +97,7 @@ public class PetServiceImpl implements PetService {
 
 		List<Pet> pets = petRepository.findByName(name);
 
-		pets.forEach(pet -> log.info("" + pet));
+		pets.forEach(pet -> log.info("{}", pet));
 
 		return pets
 				.stream()
@@ -117,9 +115,9 @@ public class PetServiceImpl implements PetService {
 
 		List<Pet> pets = petRepository.findByTypeId(typeId);
 
-		pets.forEach(pet -> log.info("" + pet));
+		pets.forEach(pet -> log.info("{}", pet));
 
-		return pets; 
+		return pets;
 	}
 
 	/**
@@ -132,7 +130,7 @@ public class PetServiceImpl implements PetService {
 
 		List<Pet> pets = petRepository.findByOwnerId(ownerId);
 
-		pets.forEach(pet -> log.info("" + pet));
+		pets.forEach(pet -> log.info("{}", pet));
 
 		return pets;
 	}

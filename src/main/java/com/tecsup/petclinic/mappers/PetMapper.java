@@ -2,36 +2,12 @@ package com.tecsup.petclinic.mappers;
 
 import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class PetMapper {
+@Mapper(componentModel = "spring")
+public interface PetMapper {
 
-    /**
-     * Convert DTO to Entity
-     * @param dto
-     * @return
-     */
-    public  Pet mapToEntity(PetDTO dto) {
-        if (dto == null) return null;
-        return new Pet(
-                dto.getId(),
-                dto.getName(),
-                dto.getTypeId(),
-                dto.getOwnerId(),
-                dto.getBirthDate()
-        );
-    }
+    Pet mapToEntity(PetDTO dto);
 
-    public PetDTO mapToDto(Pet entity) {
-        if (entity == null) return null;
-        return new PetDTO(
-                entity.getId(),
-                entity.getName(),
-                entity.getTypeId(),
-                entity.getOwnerId(),
-                entity.getBirthDate()
-        );
-    }
-
+    PetDTO mapToDto(Pet entity);
 }

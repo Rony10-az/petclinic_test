@@ -14,7 +14,10 @@ spring:
     # Windows
     # url : jdbc:mysql://localhost:3306/PETCLINIC_DB?useSSL=false&serverTimezone=UTC
     username : root
-    password : DB@Admin2023!Secure
+    password :
+
+    platform : mysql
+    initialization-mode : always
 
   data :
     rest :
