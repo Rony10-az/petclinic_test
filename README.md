@@ -21,6 +21,15 @@ Compila sin errores:
 
 ![Imagen1.png](src/main/java/com/tecsup/petclinic/docs/Imagen1.png)
 
+#### 2DA PRUEBA DE INTEGRACION
+
+SE HIZO LA IMPLEMENTACION DE testFindAllVets — GET /vets → 200 OK y lista JSON.
+testFindVetOK — GET /vets/1 → 200 OK, jsonPath $.lastName = "Carter".
+testFindVetKO — GET /vets/666 → 404 Not Found.
+![prueba.png](docs/prueba.png)
+
+![prueba2.png](docs/prueba2.png)
+
 
 ### Integrante B - Jeronimo Rodrigo Ortiz Ortiz
 
