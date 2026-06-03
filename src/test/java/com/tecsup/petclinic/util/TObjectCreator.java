@@ -1,6 +1,7 @@
 package com.tecsup.petclinic.util;
 
 import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.entities.Vet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +60,43 @@ public class TObjectCreator {
 		pets.add(new Pet(12,"Lucky",2,10, null));
 		pets.add(new Pet(13,"Sly",1,10, null));
 		return pets;
+	}
+
+	public static Vet newVet() {
+		Vet vet = new Vet();
+		vet.setFirstName("Ana");
+		vet.setLastName("Lopez");
+		vet.setEmail("ana.lopez@test.com");
+		vet.setPhone("55510001");
+		vet.setActive(true);
+		return vet;
+	}
+
+	public static Vet newVetCreated() {
+		Vet vet = newVet();
+		vet.setId(7L);
+		return vet;
+	}
+
+	public static Vet deactivatedVet() {
+		Vet vet = new Vet();
+		vet.setId(1L);
+		vet.setFirstName("James");
+		vet.setLastName("Carter");
+		vet.setEmail("james.carter@petclinic.com");
+		vet.setPhone("6085551234");
+		vet.setActive(false);
+		return vet;
+	}
+
+	public static Vet reactivatedVet() {
+		Vet vet = new Vet();
+		vet.setId(6L);
+		vet.setFirstName("Sharon");
+		vet.setLastName("Jenkins");
+		vet.setEmail("sharon.jenkins@petclinic.com");
+		vet.setPhone("6085556789");
+		vet.setActive(true);
+		return vet;
 	}
 }
