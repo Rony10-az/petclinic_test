@@ -51,6 +51,54 @@ testFindVetKO — GET /vets/666 → 404 Not Found.
 #### 2. Valicaciones correctas
 ![SOLUCIONADO](src/main/java/com/tecsup/petclinic/docs/img02-ortiz.png)
 
+#### 2DA PARTE -Pruebas de Integración - Creación y soft delete (Ortiz)
+
+##### LEVANTANDO LA APP CON PERFIL H2, comando:
+```
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"
+```
+
+- Se implementó `testCreateVet`.
+
+- Se validó el endpoint `POST /vets`.
+
+- Se envió un JSON con los datos de un nuevo veterinario.
+
+- Se verificó que la respuesta retorne `201 Created`.
+
+- Se validó que el veterinario creado tenga `active=true`.
+
+![201-CREATED](docs/1.VETS-201-CREATED.png)
+
+- Se implementó `testDeactivateVet`.
+
+- Se validó el endpoint `PUT /vets/{id}/deactivate`.
+
+- Se utilizó el veterinario con `id=1`, cargado desde `data.sql`.
+
+- Se verificó que la respuesta retorne `200 OK`.
+
+- Se validó con `jsonPath` que `$.active = false`.
+
+![DEACTIVATE-200-OK](docs/2.%20DEACTIVATE-200-OK.png)
+
+- Se implementó `testReactivateVet`.
+
+- Se validó el endpoint `PUT /vets/{id}/reactivate`.
+
+- Se utilizó el veterinario con `id=6`, que inicialmente está inactivo en `data.sql`.
+
+- Se verificó que la respuesta retorne `200 OK`.
+
+- Se validó con `jsonPath` que `$.active = true`.
+
+![REACTIVATE-200-OK](docs/3.%20REACTIVATE-200-OK.png)
+
+- Se ejecutaron las pruebas usando `MockMvc`.
+
+- Se validó la ejecución con el perfil `h2`.
+
+![EJECUCIÓN-PRUEBAS-INTEGRACION](docs/PRUEBAS-APROBADAS.png)
 
 ##### Integrante C
 
