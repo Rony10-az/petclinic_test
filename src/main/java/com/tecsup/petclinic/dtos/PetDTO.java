@@ -5,17 +5,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
+/**
+ *
+ * @author jgomezm
+ *
+ */
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Builder
 public class PetDTO {
 
     private Integer id;
+
     private String name;
+
     private int typeId;
+
     private int ownerId;
-    private LocalDate birthDate;
+
+    private String birthDate;
+
 }

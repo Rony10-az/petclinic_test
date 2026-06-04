@@ -14,5 +14,5 @@ public class VetDTO {
     private String lastName;
     private String email;
     private String phone;
-    private Boolean isActive;
+    private Boolean active;
 }

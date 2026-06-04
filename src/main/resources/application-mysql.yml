@@ -16,14 +16,13 @@ spring:
     username : root
     password :
 
-  sql:
-    init:
-      mode: always
-      platform: mysql
-
   data :
     rest :
       basePath : /api
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 logging :
   # DEBUG, INFO , ERROR
