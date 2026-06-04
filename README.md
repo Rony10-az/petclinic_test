@@ -127,19 +127,20 @@ Levantando la app con perfil H2:
 
 Se implementaron pruebas unitarias enfocadas en validar el correcto filtrado de datos y el manejo de excepciones dentro del servicio de tipos de mascotas (TypeService).
 
-- Pruebas realizadas
+**Pruebas realizadas :**
 - testGetPetCountByType_ExcludeInactive
 - Verifica que el sistema excluya registros con active = false, asegurando reportes con datos válidos.
 - testFindTypeById_NotFound
 - Valida que se lance la excepción TypeNotFoundException cuando no existe el tipo de mascota.
 - testDeleteType_NotFound
 - Comprueba que el sistema lance una excepción al intentar eliminar un registro inexistente.
-- Archivos trabajados
 
-📂 TypeServiceImpl.java
-📂 TypeServiceTest.java
-📂 TypeRepository.java
-📂 Type.java
+**Archivos trabajados :**
+
+- 📂 TypeServiceImpl.java
+- 📂 TypeServiceTest.java
+- 📂 TypeRepository.java
+- 📂 Type.java
 
 **VetServiceTest**
 
