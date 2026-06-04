@@ -85,6 +85,7 @@ public class VetServiceImpl implements VetService {
         vetRepository.save(vet);
     }
 
+    @Override
     public Vet reactivateVet(Long id) {
         Vet vet = findVetById(id);
         vet.setActive(true);
