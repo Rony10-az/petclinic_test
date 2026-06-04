@@ -1,4 +1,3 @@
-// src/main/java/com/tecsup/petclinic/service/VetServiceImpl.java
 package com.tecsup.petclinic.service;
 
 import com.tecsup.petclinic.dtos.VetDTO;
@@ -13,64 +12,100 @@ import java.util.List;
 
 @Service
 public class VetServiceImpl implements VetService {
-    // src/main/java/com/tecsup/petclinic/service/VetServiceImpl.java
-// src/main/java/com/tecsup/petclinic/service/VetServiceImpl.java
+
+    @Autowired
+    private VetRepository vetRepository;
+
     @Autowired
     private VetMapper vetMapper;
 
-    // Método create con transformación DTO --> Entidad
+    // =========================
+    // 🔹 MÉTODOS EXTRA (DTO)
+    // =========================
+
     public Vet createVet(VetDTO vetDTO) {
         Vet vet = vetMapper.toEntity(vetDTO);
         return vetRepository.save(vet);
     }
 
-    // Método find Duck to DTO
     public VetDTO findVetByIdDTO(Long id) {
         Vet vet = findVetById(id);
         return vetMapper.toDTO(vet);
     }
 
-    @Autowired
-    private VetRepository vetRepository;
+    // =========================
+    // 🔹 CRUD PRINCIPAL
+    // =========================
 
     @Override
     public Vet createVet(Vet vet) {
         if (vet == null || vet.getEmail() == null) {
-            throw new IllegalArgumentException("Vet object or email cannot be null!");
+            throw new IllegalArgumentException("Vet or email cannot be null");
         }
         return vetRepository.save(vet);
-    }
-
-
-    @Override
-    public Vet updateVet(Long id, Vet vet) {
-        return vetRepository.findById(id)
-                .map(existingVet -> {
-                    existingVet.setFirstName(vet.getFirstName());
-                    existingVet.setLastName(vet.getLastName());
-                    existingVet.setEmail(vet.getEmail());
-                    existingVet.setPhone(vet.getPhone());
-                    existingVet.setActive(vet.getActive());
-                    return vetRepository.save(existingVet);
-                })
-                .orElseThrow(() -> new RuntimeException("Vet with id " + id + " not found!"));
     }
 
     @Override
     public Vet findVetById(Long id) {
         return vetRepository.findById(id)
-                .orElseThrow(() -> new VetNotFoundException("Vet with ID " + id + " not found"));
+                .orElseThrow(() -> new VetNotFoundException(id.toString()));
     }
 
     @Override
+    public Vet updateVet(Long id, Vet vet) {
+        Vet existing = findVetById(id);
+
+        existing.setFirstName(vet.getFirstName());
+        existing.setLastName(vet.getLastName());
+        existing.setEmail(vet.getEmail());
+        existing.setPhone(vet.getPhone());
+        existing.setActive(vet.getActive());
+
+        return vetRepository.save(existing);
+    }
+
+    // =========================
+    // 🔹 ESTADO
+    // =========================
+
+    @Override
     public void deactivateVet(Long id) {
-        Vet vet = findVetById(id); // Reutiliza el método anterior para lanzar la excepción
+        Vet vet = findVetById(id);
         vet.setActive(false);
         vetRepository.save(vet);
     }
 
     @Override
+    public void activateVet(Long id) {
+        Vet vet = findVetById(id);
+        vet.setActive(true);
+        vetRepository.save(vet);
+    }
+
+    @Override
+    public List<Vet> findActiveVets() {
+        return vetRepository.findByActiveTrue();
+    }
+
+    @Override
     public List<Vet> findInactiveVets() {
         return vetRepository.findByActiveFalse();
+    }
+
+    // =========================
+    // 🔹 LISTADO Y ELIMINACIÓN
+    // =========================
+
+    @Override
+    public List<Vet> findAllVets() {
+        return vetRepository.findAll();
+    }
+
+    @Override
+    public void deleteVet(Long id) {
+        if (!vetRepository.existsById(id)) {
+            throw new VetNotFoundException(id.toString());
+        }
+        vetRepository.deleteById(id);
     }
 }

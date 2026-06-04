@@ -1,8 +1,9 @@
-package com.tecsup.petclinic.services;
+package com.tecsup.petclinic.service;
 
 import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exceptions.PetNotFoundException;
+import com.tecsup.petclinic.service.PetService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

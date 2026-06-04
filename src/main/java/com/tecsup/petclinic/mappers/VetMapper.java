@@ -11,12 +11,12 @@ import org.mapstruct.Mappings;
 public interface VetMapper {
     @Mappings({
             @Mapping(source = "firstName", target = "firstName"),
-            @Mapping(source = "isActive", target = "active")
+            @Mapping(source = "active", target = "active")
     })
     Vet toEntity(VetDTO vetDTO);
 
     @Mappings({
-            @Mapping(source = "active", target = "isActive")
+            @Mapping(source = "active", target = "active")
     })
     VetDTO toDTO(Vet vet);
 }

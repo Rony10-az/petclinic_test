@@ -9,21 +9,29 @@ import java.util.List;
 public class TObjectCreator {
 
 	public static Pet getPet() {
-		return new Pet(1,"Leo",1,1, null);
+		return Pet.builder()
+				.id(1)
+				.name("Leo")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static Pet newPet() {
-		Pet newEntity = new Pet();
-		newEntity.setName("Punky");
-		newEntity.setTypeId(1);
-		newEntity.setOwnerId(1);
-		return newEntity;
+		return Pet.builder()
+				.name("Punky")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static Pet newPetCreated() {
-		Pet pet = newPet();
-		pet.setId(1000);
-		return pet;
+		return Pet.builder()
+				.id(1000)
+				.name("Punky")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static PetDTO newPetDTO() {
@@ -40,44 +48,85 @@ public class TObjectCreator {
 		return petDTO;
 	}
 
-
 	public static Pet newPetForUpdate() {
-		return new Pet(0,"Bear",1,1,null);
+		return Pet.builder()
+				.id(0)
+				.name("Bear")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static Pet newPetCreatedForUpdate() {
-		Pet pet = newPetForUpdate();
-		pet.setId(4000);
-		return pet;
+		return Pet.builder()
+				.id(4000)
+				.name("Bear")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static Pet newPetForDelete() {
-		return new Pet(0,"Bird",1,1, null);
+		return Pet.builder()
+				.id(0)
+				.name("Bird")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static Pet newPetCreatedForDelete() {
-		Pet pet = newPetForDelete();
-		pet.setId(2000);
-		return pet;
+		return Pet.builder()
+				.id(2000)
+				.name("Bird")
+				.typeId(1)
+				.ownerId(1)
+				.build();
 	}
 
 	public static List<Pet> getPetsForFindByName() {
-		List<Pet> pets  = new ArrayList<Pet>();
-		pets.add(new Pet(1,"Leo",1,1, null));
+		List<Pet> pets = new ArrayList<>();
+		pets.add(getPet());
 		return pets;
 	}
 
 	public static List<Pet> getPetsForFindByTypeId() {
-		List<Pet> pets  = new ArrayList<Pet>();
-		pets.add(new Pet(9,"Lucky",5,7, null));
-		pets.add(new Pet(11,"Freddy",5,9, null));
+		List<Pet> pets = new ArrayList<>();
+
+		pets.add(Pet.builder()
+				.id(9)
+				.name("Lucky")
+				.typeId(5)
+				.ownerId(7)
+				.build());
+
+		pets.add(Pet.builder()
+				.id(11)
+				.name("Freddy")
+				.typeId(5)
+				.ownerId(9)
+				.build());
+
 		return pets;
 	}
 
 	public static List<Pet> getPetsForFindByOwnerId() {
-		List<Pet> pets  = new ArrayList<Pet>();
-		pets.add(new Pet(12,"Lucky",2,10, null));
-		pets.add(new Pet(13,"Sly",1,10, null));
+		List<Pet> pets = new ArrayList<>();
+
+		pets.add(Pet.builder()
+				.id(12)
+				.name("Lucky")
+				.typeId(2)
+				.ownerId(10)
+				.build());
+
+		pets.add(Pet.builder()
+				.id(13)
+				.name("Sly")
+				.typeId(1)
+				.ownerId(10)
+				.build());
+
 		return pets;
 	}
 }
