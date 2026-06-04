@@ -72,10 +72,10 @@ public class VetServiceImpl implements VetService {
     // =========================
 
     @Override
-    public void deactivateVet(Long id) {
+    public Vet deactivateVet(Long id) {
         Vet vet = findVetById(id);
         vet.setActive(false);
-        vetRepository.save(vet);
+        return vetRepository.save(vet);
     }
 
     @Override

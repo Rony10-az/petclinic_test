@@ -20,7 +20,7 @@ public interface VetService {
     // 🔹 ESTADO (ACTIVE / INACTIVE)
     // =========================
 
-    void deactivateVet(Long id);
+    Vet deactivateVet(Long id);
 
     void activateVet(Long id);
 
