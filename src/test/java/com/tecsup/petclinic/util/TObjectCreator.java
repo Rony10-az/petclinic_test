@@ -2,11 +2,16 @@ package com.tecsup.petclinic.util;
 
 import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.entities.Vet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TObjectCreator {
+
+	// =========================
+	// PET
+	// =========================
 
 	public static Pet getPet() {
 		return Pet.builder()
@@ -35,22 +40,22 @@ public class TObjectCreator {
 	}
 
 	public static PetDTO newPetDTO() {
-		PetDTO newDTO = new PetDTO();
-		newDTO.setName("Punky");
-		newDTO.setTypeId(1);
-		newDTO.setOwnerId(1);
-		return newDTO;
+		PetDTO dto = new PetDTO();
+		dto.setName("Punky");
+		dto.setTypeId(1);
+		dto.setOwnerId(1);
+		return dto;
 	}
 
 	public static PetDTO newPetDTOCreated() {
-		PetDTO petDTO = newPetDTO();
-		petDTO.setId(1000);
-		return petDTO;
+		PetDTO dto = newPetDTO();
+		dto.setId(1000); // ✔ Integer
+		return dto;
 	}
 
 	public static Pet newPetForUpdate() {
 		return Pet.builder()
-				.id(0)
+				.id(1)
 				.name("Bear")
 				.typeId(1)
 				.ownerId(1)
@@ -68,7 +73,7 @@ public class TObjectCreator {
 
 	public static Pet newPetForDelete() {
 		return Pet.builder()
-				.id(0)
+				.id(1)
 				.name("Bird")
 				.typeId(1)
 				.ownerId(1)
@@ -128,5 +133,47 @@ public class TObjectCreator {
 				.build());
 
 		return pets;
+	}
+
+	// =========================
+	// VET
+	// =========================
+
+	public static Vet newVet() {
+		Vet vet = new Vet();
+		vet.setFirstName("Ana");
+		vet.setLastName("Lopez");
+		vet.setEmail("ana.lopez@test.com");
+		vet.setPhone("55510001");
+		vet.setActive(true);
+		return vet;
+	}
+
+	public static Vet newVetCreated() {
+		Vet vet = newVet();
+		vet.setId(7L); // ✔ Long
+		return vet;
+	}
+
+	public static Vet deactivatedVet() {
+		Vet vet = new Vet();
+		vet.setId(1L);
+		vet.setFirstName("James");
+		vet.setLastName("Carter");
+		vet.setEmail("james.carter@petclinic.com");
+		vet.setPhone("6085551234");
+		vet.setActive(false);
+		return vet;
+	}
+
+	public static Vet reactivatedVet() {
+		Vet vet = new Vet();
+		vet.setId(6L);
+		vet.setFirstName("Sharon");
+		vet.setLastName("Jenkins");
+		vet.setEmail("sharon.jenkins@petclinic.com");
+		vet.setPhone("6085556789");
+		vet.setActive(true);
+		return vet;
 	}
 }

@@ -1,9 +1,14 @@
-package com.tecsup.petclinic.web;
+package com.tecsup.petclinic.controller;
 
 import com.tecsup.petclinic.entities.Vet;
 import com.tecsup.petclinic.service.VetService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
@@ -17,9 +22,6 @@ public class VetController {
         this.vetService = vetService;
     }
 
-    // =========================
-    // CREATE
-    // =========================
     @PostMapping
     public ResponseEntity<Vet> createVet(@RequestBody Vet vet) {
         Vet createdVet = vetService.createVet(vet);
@@ -28,21 +30,14 @@ public class VetController {
                 .body(createdVet);
     }
 
-    // =========================
-    // DEACTIVATE (void)
-    // =========================
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<Void> deactivateVet(@PathVariable Long id) {
         vetService.deactivateVet(id);
-        return ResponseEntity.noContent().build(); // ✔ correcto
+        return ResponseEntity.noContent().build();
     }
 
-    // =========================
-    // REACTIVATE (ahora sí existe en interface)
-    // =========================
     @PutMapping("/{id}/reactivate")
     public ResponseEntity<Vet> reactivateVet(@PathVariable Long id) {
-        Vet vet = vetService.reactivateVet(id);
-        return ResponseEntity.ok(vet);
+        return ResponseEntity.ok(vetService.reactivateVet(id));
     }
 }

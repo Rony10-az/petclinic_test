@@ -5,7 +5,6 @@ import com.tecsup.petclinic.entities.Vet;
 import com.tecsup.petclinic.exceptions.VetNotFoundException;
 import com.tecsup.petclinic.mappers.VetMapper;
 import com.tecsup.petclinic.repository.VetRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,35 +12,40 @@ import java.util.List;
 @Service
 public class VetServiceImpl implements VetService {
 
-    @Autowired
-    private VetRepository vetRepository;
+    private final VetRepository vetRepository;
+    private final VetMapper vetMapper;
 
-    @Autowired
-    private VetMapper vetMapper;
+    public VetServiceImpl(VetRepository vetRepository, VetMapper vetMapper) {
+        this.vetRepository = vetRepository;
+        this.vetMapper = vetMapper;
+    }
 
     // =========================
-    // 🔹 MÉTODOS EXTRA (DTO)
+    // DTO METHODS (NO INTERFACE)
     // =========================
 
-    public Vet createVet(VetDTO vetDTO) {
+    public Vet createVetFromDTO(VetDTO vetDTO) {
         Vet vet = vetMapper.toEntity(vetDTO);
+        vet.setActive(true);
         return vetRepository.save(vet);
     }
 
-    public VetDTO findVetByIdDTO(Long id) {
+    public VetDTO findVetDTOById(Long id) {
         Vet vet = findVetById(id);
         return vetMapper.toDTO(vet);
     }
 
     // =========================
-    // 🔹 CRUD PRINCIPAL
+    // CRUD PRINCIPAL (INTERFACE)
     // =========================
 
     @Override
     public Vet createVet(Vet vet) {
-        if (vet == null || vet.getEmail() == null) {
-            throw new IllegalArgumentException("Vet or email cannot be null");
+        if (vet == null) {
+            throw new IllegalArgumentException("Vet cannot be null");
         }
+
+        vet.setActive(true);
         return vetRepository.save(vet);
     }
 
@@ -59,13 +63,12 @@ public class VetServiceImpl implements VetService {
         existing.setLastName(vet.getLastName());
         existing.setEmail(vet.getEmail());
         existing.setPhone(vet.getPhone());
-        existing.setActive(vet.getActive());
 
         return vetRepository.save(existing);
     }
 
     // =========================
-    // 🔹 ESTADO
+    // STATE MANAGEMENT
     // =========================
 
     @Override
@@ -82,6 +85,16 @@ public class VetServiceImpl implements VetService {
         vetRepository.save(vet);
     }
 
+    public Vet reactivateVet(Long id) {
+        Vet vet = findVetById(id);
+        vet.setActive(true);
+        return vetRepository.save(vet);
+    }
+
+    // =========================
+    // FILTERS
+    // =========================
+
     @Override
     public List<Vet> findActiveVets() {
         return vetRepository.findByActiveTrue();
@@ -92,20 +105,19 @@ public class VetServiceImpl implements VetService {
         return vetRepository.findByActiveFalse();
     }
 
-    // =========================
-    // 🔹 LISTADO Y ELIMINACIÓN
-    // =========================
-
     @Override
     public List<Vet> findAllVets() {
         return vetRepository.findAll();
     }
 
+    // =========================
+    // DELETE (SOFT DELETE RECOMENDADO)
+    // =========================
+
     @Override
     public void deleteVet(Long id) {
-        if (!vetRepository.existsById(id)) {
-            throw new VetNotFoundException(id.toString());
-        }
-        vetRepository.deleteById(id);
+        Vet vet = findVetById(id);
+        vet.setActive(false);
+        vetRepository.save(vet);
     }
 }
